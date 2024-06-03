@@ -1,0 +1,22 @@
+version: '3'
+services:
+  openvpn:
+    container_name: vpnServer
+    build:
+      context: .
+    environment:
+      SUBNET: ${SUBNET}
+      forwardSubnets: ${forwardSubnets}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_IPs: ${ADMIN_IP}
+      KEYCLOAK_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
+    restart: always
+    volumes:
+      - ./src:/etc/src
+      - ./exec.py:/exec.py
+      - ./tmp:/tmp
+    ports:
+      - "1194:1194/udp"
+
